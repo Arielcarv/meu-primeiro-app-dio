@@ -1,4 +1,4 @@
-package com.arielcarv.firstapp
+package com.example.electriccarapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
