@@ -7,12 +7,124 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        android:text="@string/app_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_tab_cars"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/cars"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_tab_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/favorites"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_tab_cars"
+        app:layout_constraintTop_toTopOf="@id/tv_tab_cars" />
+
+    <ImageView
+        android:id="@+id/iv_image"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/electric_car_description"
+        android:scaleType="centerCrop"
+        android:scaleX="-1"
+        android:src="@drawable/electric_car"
+        app:layout_constraintLeft_toLeftOf="@id/tv_tab_cars"
+        app:layout_constraintTop_toBottomOf="@id/tv_tab_cars" />
+
+    <TextView
+        android:id="@+id/tv_car_price"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/car_price"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_image" />
+
+    <TextView
+        android:id="@+id/tv_car_price_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/car_price_value"
+        app:layout_constraintStart_toEndOf="@id/tv_car_price"
+        app:layout_constraintTop_toBottomOf="@id/iv_image" />
+
+    <TextView
+        android:id="@+id/tv_car_batery"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/car_batery"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_price" />
+
+    <TextView
+        android:id="@+id/tv_car_batery_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/car_batery_value"
+        app:layout_constraintStart_toEndOf="@id/tv_car_batery"
+        app:layout_constraintTop_toTopOf="@id/tv_car_batery" />
+
+    <TextView
+        android:id="@+id/tv_car_power"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/car_power"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_batery" />
+
+    <TextView
+        android:id="@+id/tv_car_power_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/car_power_value"
+        app:layout_constraintStart_toEndOf="@id/tv_car_power"
+        app:layout_constraintTop_toTopOf="@id/tv_car_power" />
+
+    <TextView
+        android:id="@+id/tv_car_charge"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/car_charge"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_power" />
+
+    <TextView
+        android:id="@+id/tv_car_charge_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/car_charge_value"
+        app:layout_constraintStart_toEndOf="@id/tv_car_charge"
+        app:layout_constraintTop_toTopOf="@id/tv_car_charge" />
 </androidx.constraintlayout.widget.ConstraintLayout>
