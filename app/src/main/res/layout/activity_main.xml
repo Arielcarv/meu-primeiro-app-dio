@@ -69,24 +69,24 @@
         app:layout_constraintTop_toBottomOf="@id/iv_image" />
 
     <TextView
-        android:id="@+id/tv_car_batery"
+        android:id="@+id/tv_car_battery"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:text="@string/car_batery"
+        android:text="@string/car_battery"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_car_price" />
 
     <TextView
-        android:id="@+id/tv_car_batery_value"
+        android:id="@+id/tv_car_battery_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="@string/car_batery_value"
-        app:layout_constraintStart_toEndOf="@id/tv_car_batery"
-        app:layout_constraintTop_toTopOf="@id/tv_car_batery" />
+        android:text="@string/car_battery_value"
+        app:layout_constraintStart_toEndOf="@id/tv_car_battery"
+        app:layout_constraintTop_toTopOf="@id/tv_car_battery" />
 
     <TextView
         android:id="@+id/tv_car_power"
@@ -97,7 +97,7 @@
         android:text="@string/car_power"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_car_batery" />
+        app:layout_constraintTop_toBottomOf="@id/tv_car_battery" />
 
     <TextView
         android:id="@+id/tv_car_power_value"
