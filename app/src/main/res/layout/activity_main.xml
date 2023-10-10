@@ -127,4 +127,47 @@
         android:text="@string/car_charge_value"
         app:layout_constraintStart_toEndOf="@id/tv_car_charge"
         app:layout_constraintTop_toTopOf="@id/tv_car_charge" />
+
+    <EditText
+        android:id="@+id/et_charge_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:autofillHints="Kwh Price"
+        android:ems="10"
+        android:hint="@string/charge_price"
+        android:inputType="number"
+        android:maxLength="100"
+        android:maxLines="2"
+        android:text="@string/charge_price_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_car_charge" />
+
+    <EditText
+        android:id="@+id/et_kms_driven"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:autofillHints="Kwh Price"
+        android:ems="10"
+        android:hint="@string/kms_price"
+        android:inputType="number"
+        android:maxLength="100"
+        android:maxLines="2"
+        android:text="@string/kms_price_value"
+        app:layout_constraintEnd_toEndOf="@id/et_charge_price"
+        app:layout_constraintStart_toStartOf="@id/et_charge_price"
+        app:layout_constraintTop_toBottomOf="@+id/et_charge_price" />
+
+    <Button
+        android:id="@+id/btn_calculate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLength="100"
+        android:maxLines="2"
+        android:text="@string/calculate"
+        app:layout_constraintEnd_toEndOf="@+id/et_kms_driven"
+        app:layout_constraintStart_toStartOf="@+id/et_kms_driven"
+        app:layout_constraintTop_toBottomOf="@+id/et_kms_driven" />
 </androidx.constraintlayout.widget.ConstraintLayout>

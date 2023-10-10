@@ -13,4 +13,9 @@
     <string name="car_power_value">646 HP</string>
     <string name="car_charge">Charge</string>
     <string name="car_charge_value">23 min</string>
+    <string name="charge_price">Price</string>
+    <string name="charge_price_value">Price</string>
+    <string name="kms_price_value">$1000</string>
+    <string name="kms_price">Kms driven</string>
+    <string name="calculate">calculate</string>
 </resources>

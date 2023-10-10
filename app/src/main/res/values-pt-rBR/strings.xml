@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ElectricCarApp</string>
-    <string name="app_title">Electric Car</string>
-    <string name="cars">Cars</string>
-    <string name="favorites">Favorites</string>
-    <string name="electric_car_description">An Electric Car Image</string>
-    <string name="car_price">Price</string>
+    <string name="app_title">Carro Elétrico</string>
+    <string name="cars">Carros</string>
+    <string name="favorites">Favoritos</string>
+    <string name="electric_car_description">Imagem de um carro elétrico</string>
+    <string name="car_price">Preço</string>
     <string name="car_price_value">R$ 100.000,00</string>
-    <string name="car_battery">Battery</string>
+    <string name="car_battery">Bateria</string>
     <string name="car_battery_value">93,4 kWh</string>
-    <string name="car_power">Power</string>
-    <string name="car_power_value">646 HP</string>
-    <string name="car_charge">Charge</string>
+    <string name="car_power">Potência</string>
+    <string name="car_power_value">646 CV</string>
+    <string name="car_charge">Recarga</string>
     <string name="car_charge_value">23 min</string>
+    <string name="charge_price">Preço</string>
+    <string name="charge_price_value">R$ 123</string>
+    <string name="kms_price_value">R$ 1000</string>
+    <string name="kms_price">Kms Percorridos</string>
+    <string name="calculate">Calcular</string>
 </resources>
