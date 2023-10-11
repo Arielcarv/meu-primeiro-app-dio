@@ -170,4 +170,27 @@
         app:layout_constraintEnd_toEndOf="@+id/et_kms_driven"
         app:layout_constraintStart_toStartOf="@+id/et_kms_driven"
         app:layout_constraintTop_toBottomOf="@+id/et_kms_driven" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/btn_calculate"
+        app:layout_constraintTop_toBottomOf="@+id/btn_calculate">
+
+        <RadioButton
+            android:id="@+id/pizza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pizza" />
+
+        <RadioButton
+            android:id="@+id/hamburguer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hamburguer" />
+
+    </RadioGroup>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
