@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -25,7 +25,7 @@
         android:text="@string/cars"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_app_title" />
 
     <TextView
         android:id="@+id/tv_tab_favorites"
@@ -172,11 +172,12 @@
         app:layout_constraintTop_toBottomOf="@+id/et_kms_driven" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@+id/btn_calculate"
-        app:layout_constraintTop_toBottomOf="@+id/btn_calculate">
+        app:layout_constraintStart_toStartOf="@id/btn_calculate"
+        app:layout_constraintTop_toBottomOf="@id/btn_calculate">
 
         <RadioButton
             android:id="@+id/pizza"
@@ -192,5 +193,29 @@
 
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/tv_select_favorite_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select favorite:"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    <CheckBox
+        android:id="@+id/cb_commit_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commit_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_select_favorite_2"
+        app:layout_constraintStart_toStartOf="@id/tv_select_favorite_2"
+        />
+    <CheckBox
+        android:id="@+id/cb_commit_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Commit_2"
+        app:layout_constraintTop_toBottomOf="@id/cb_commit_1"
+        app:layout_constraintStart_toStartOf="@id/cb_commit_1"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
