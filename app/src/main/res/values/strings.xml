@@ -17,4 +17,10 @@
     <string name="kms_price_value">$1000</string>
     <string name="kms_price">Kms driven</string>
     <string name="calculate">calculate</string>
+    <string-array name="array_cities">
+        <item>Campos</item>
+        <item>Grussai</item>
+        <item>Farol</item>
+        <item>Atafona</item>
+    </string-array>
 </resources>

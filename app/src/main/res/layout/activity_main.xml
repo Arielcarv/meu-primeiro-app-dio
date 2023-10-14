@@ -219,12 +219,22 @@
         />
 
     <Switch
-        android:id="@+id/s_light"
+        android:id="@+id/sw_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="on/off"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_select_favorite_2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Spinner
+        android:id="@+id/sp_cities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/array_cities"
+        app:layout_constraintTop_toBottomOf="@id/sw_light"
+        app:layout_constraintStart_toStartOf="@id/sw_light"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
