@@ -136,7 +136,7 @@
         android:autofillHints="Kwh Price"
         android:ems="10"
         android:hint="@string/charge_price"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:maxLength="100"
         android:maxLines="2"
         android:text="@string/charge_price_value"
@@ -152,7 +152,7 @@
         android:autofillHints="Kwh Price"
         android:ems="10"
         android:hint="@string/kms_price"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:maxLength="100"
         android:maxLines="2"
         android:text="@string/kms_price_value"
@@ -171,70 +171,12 @@
         app:layout_constraintStart_toStartOf="@+id/et_kms_driven"
         app:layout_constraintTop_toBottomOf="@+id/et_kms_driven" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="@id/btn_calculate"
-        app:layout_constraintTop_toBottomOf="@id/btn_calculate">
-
-        <RadioButton
-            android:id="@+id/pizza"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pizza" />
-
-        <RadioButton
-            android:id="@+id/hamburguer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hamburguer" />
-
-    </RadioGroup>
-
     <TextView
-        android:id="@+id/tv_select_favorite_2"
+        android:id="@+id/tv_autonomy_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select favorite:"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintStart_toStartOf="@id/btn_calculate"
+        app:layout_constraintTop_toBottomOf="@id/btn_calculate" />
 
-    <CheckBox
-        android:id="@+id/cb_commit_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Commit_1"
-        app:layout_constraintTop_toBottomOf="@id/tv_select_favorite_2"
-        app:layout_constraintStart_toStartOf="@id/tv_select_favorite_2"
-        />
-    <CheckBox
-        android:id="@+id/cb_commit_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Commit_2"
-        app:layout_constraintTop_toBottomOf="@id/cb_commit_1"
-        app:layout_constraintStart_toStartOf="@id/cb_commit_1"
-        />
-
-    <Switch
-        android:id="@+id/sw_light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="on/off"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_select_favorite_2"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    <Spinner
-        android:id="@+id/sp_cities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/array_cities"
-        app:layout_constraintTop_toBottomOf="@id/sw_light"
-        app:layout_constraintStart_toStartOf="@id/sw_light"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
