@@ -136,10 +136,10 @@
         android:autofillHints="Kwh Price"
         android:ems="10"
         android:hint="@string/charge_price"
+        android:textColorHint="#BBB"
         android:inputType="numberDecimal"
         android:maxLength="100"
         android:maxLines="2"
-        android:text="@string/charge_price_value"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_car_charge" />
@@ -152,10 +152,10 @@
         android:autofillHints="Kwh Price"
         android:ems="10"
         android:hint="@string/kms_price"
+        android:textColorHint="#BBB"
         android:inputType="numberDecimal"
         android:maxLength="100"
         android:maxLines="2"
-        android:text="@string/kms_price_value"
         app:layout_constraintEnd_toEndOf="@id/et_charge_price"
         app:layout_constraintStart_toStartOf="@id/et_charge_price"
         app:layout_constraintTop_toBottomOf="@+id/et_charge_price" />
