@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var chargePrice: EditText
     lateinit var btnCalculate: Button
     lateinit var kmsDriven: EditText
-    lateinit var automonyResult: TextView
+    lateinit var autonomyResult: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         chargePrice = findViewById<EditText>(R.id.et_charge_price)
         btnCalculate = findViewById<Button>(R.id.btn_calculate)
         kmsDriven = findViewById<EditText>(R.id.et_kms_driven)
-        automonyResult = findViewById<TextView>(R.id.tv_autonomy_result)
+        autonomyResult = findViewById<TextView>(R.id.tv_autonomy_result)
     }
 
     fun setupListeners() {
@@ -35,10 +35,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun calculateCarAutonomy() {
-        val chargePrice = chargePrice.text.toString().toFloat()
-        val kmsDriven = kmsDriven.text.toString().toFloat()
-        val autonomy = chargePrice / kmsDriven
+        try {
+            val chargePrice = chargePrice.text.toString().toFloat()
+            val kmsDriven = kmsDriven.text.toString().toFloat()
+            val autonomy = chargePrice / kmsDriven
 
-        automonyResult.text = autonomy.toString()
+            autonomyResult.text = autonomy.toString()
+        } catch (e: NumberFormatException) {
+
+            autonomyResult.text = "Invalid input"
+        }
     }
 }
