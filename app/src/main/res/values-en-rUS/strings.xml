@@ -16,4 +16,5 @@
     <string name="charge_price">Price</string>
     <string name="kms_price">Kms driven</string>
     <string name="calculate">calculate</string>
+    <string name="redirect">redirect</string>
 </resources>

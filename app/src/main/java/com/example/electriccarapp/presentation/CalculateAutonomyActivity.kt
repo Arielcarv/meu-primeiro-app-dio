@@ -1,21 +1,21 @@
-package com.example.electriccarapp
+package com.example.electriccarapp.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.example.electriccarapp.R
 
-class MainActivity : AppCompatActivity() {
+class CalculateAutonomyActivity : AppCompatActivity() {
     lateinit var chargePrice: EditText
     lateinit var btnCalculate: Button
     lateinit var kmsDriven: EditText
     lateinit var autonomyResult: TextView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_calculate_autonomy)
 
         setupViews()
         setupListeners()
@@ -39,10 +39,8 @@ class MainActivity : AppCompatActivity() {
             val chargePrice = chargePrice.text.toString().toFloat()
             val kmsDriven = kmsDriven.text.toString().toFloat()
             val autonomy = chargePrice / kmsDriven
-
             autonomyResult.text = autonomy.toString()
         } catch (e: NumberFormatException) {
-
             autonomyResult.text = "Invalid input"
         }
     }
