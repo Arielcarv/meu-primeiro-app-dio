@@ -17,4 +17,5 @@
     <string name="kms_price">Kms Percorridos</string>
     <string name="calculate">Calcular</string>
     <string name="redirect">redirect</string>
+    <string name="tv_calculate_autonomy">Calculate Car Autonomy</string>
 </resources>
