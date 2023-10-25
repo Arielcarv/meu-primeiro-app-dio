@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
+import com.example.electriccarapp.presentation.adapter.CarAdapter
 
 class MainActivity : AppCompatActivity() {
     lateinit var btnRedirect: Button
@@ -35,8 +37,8 @@ class MainActivity : AppCompatActivity() {
             "Ice Cream Sandwich",
             "Jelly Bean"
         )
-//        var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
-//        cars_list.adapter = adapter
+        var adapter = CarAdapter(data)
+        cars_list.adapter = adapter
     }
 
 
