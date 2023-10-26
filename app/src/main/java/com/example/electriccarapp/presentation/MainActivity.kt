@@ -4,14 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
+import com.example.electriccarapp.data.CarFactory
 import com.example.electriccarapp.presentation.adapter.CarAdapter
 
 class MainActivity : AppCompatActivity() {
-    lateinit var btnRedirect: Button
-    lateinit var cars_list: RecyclerView
+    private lateinit var btnRedirect: Button
+    private lateinit var carsList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,27 +22,19 @@ class MainActivity : AppCompatActivity() {
         setupList()
     }
 
-    fun setupViews() {
-        btnRedirect = findViewById<Button>(R.id.btn_redirect)
-        cars_list = findViewById<RecyclerView>(R.id.rv_cars_list)
+    private fun setupViews() {
+        btnRedirect = findViewById(R.id.btn_redirect)
+        carsList = findViewById(R.id.rv_cars_list)
     }
 
-    fun setupList() {
-        var data = arrayOf(
-            "Cupcake",
-            "Donut",
-            "Froyo",
-            "Gingerbread",
-            "Honeycomb",
-            "Ice Cream Sandwich",
-            "Jelly Bean"
-        )
-        var adapter = CarAdapter(data)
-        cars_list.adapter = adapter
+    private fun setupList() {
+        val data = CarFactory.list
+        val adapter = CarAdapter(data)
+        carsList.adapter = adapter
     }
 
 
-    fun setupListeners() {
+    private fun setupListeners() {
         btnRedirect.setOnClickListener {
             startActivity(Intent(this, CalculateAutonomyActivity::class.java))
         }
