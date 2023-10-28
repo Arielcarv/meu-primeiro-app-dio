@@ -1,4 +1,4 @@
-package com.example.electriccarapp.presentation
+package com.example.electriccarapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
 import com.example.electriccarapp.data.CarFactory
-import com.example.electriccarapp.presentation.adapter.CarAdapter
+import com.example.electriccarapp.ui.adapter.CarAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btnRedirect: Button

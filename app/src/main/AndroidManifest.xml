@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ElectricCarApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.CalculateAutonomyActivity"
+            android:name=".ui.CalculateAutonomyActivity"
             android:exported="true">
         </activity>
     </application>

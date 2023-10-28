@@ -1,4 +1,4 @@
-package com.example.electriccarapp.presentation.adapter
+package com.example.electriccarapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
