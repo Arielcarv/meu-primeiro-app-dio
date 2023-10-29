@@ -6,13 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.example.electriccarapp.R
 import com.example.electriccarapp.data.CarFactory
 import com.example.electriccarapp.ui.adapter.CarAdapter
+import com.example.electriccarapp.ui.adapter.TabAdapter
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var btnRedirect: Button
+    private lateinit var btnCalculator: Button
     private lateinit var carsList: RecyclerView
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager2: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,35 +27,12 @@ class MainActivity : AppCompatActivity() {
         setupViews()
         setupListeners()
         setupList()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("Android LifeCycle", "RESUME")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d("Android LifeCycle", "START")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("Android LifeCycle", "PAUSE")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d("Android LifeCycle", "STOP")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Android LifeCycle", "DESTROY")
+        setupTabs()
     }
 
     private fun setupViews() {
-        btnRedirect = findViewById(R.id.btn_redirect)
+        tabLayout = findViewById(R.id.tab_layout)
+        btnCalculator = findViewById(R.id.btn_calculator)
         carsList = findViewById(R.id.rv_cars_list)
     }
 
@@ -60,9 +42,13 @@ class MainActivity : AppCompatActivity() {
         carsList.adapter = adapter
     }
 
+    private fun setupTabs() {
+        val tabsAdapter = TabAdapter(this)
+        viewPager2.adapter = tabsAdapter
+    }
 
     private fun setupListeners() {
-        btnRedirect.setOnClickListener {
+        btnCalculator.setOnClickListener {
             startActivity(Intent(this, CalculateAutonomyActivity::class.java))
         }
     }

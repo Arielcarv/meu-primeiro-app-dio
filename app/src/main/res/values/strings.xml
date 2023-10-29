@@ -15,7 +15,7 @@
     <string name="charge_price">Price</string>
     <string name="kms_price">Kms driven</string>
     <string name="calculate">calculate</string>
-    <string name="redirect">redirect</string>
+    <string name="calculator">Calculator</string>
     <string name="tv_calculate_autonomy">Calculate Car Autonomy</string>
     <string-array name="array_cities">
         <item>Campos</item>
