@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout = findViewById(R.id.tab_layout)
         btnCalculator = findViewById(R.id.btn_calculator)
         carsList = findViewById(R.id.rv_cars_list)
+        viewPager2 = findViewById(R.id.vp_view_pager)
     }
 
     private fun setupList() {
@@ -51,5 +52,22 @@ class MainActivity : AppCompatActivity() {
         btnCalculator.setOnClickListener {
             startActivity(Intent(this, CalculateAutonomyActivity::class.java))
         }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    viewPager2.currentItem = it.position
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+        })
+
     }
 }
