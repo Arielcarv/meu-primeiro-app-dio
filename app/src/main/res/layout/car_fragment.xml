@@ -24,7 +24,6 @@
         android:layout_marginBottom="16dp"
         android:importantForAccessibility="no"
         android:src="@drawable/ic_calculator_24"
-        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
