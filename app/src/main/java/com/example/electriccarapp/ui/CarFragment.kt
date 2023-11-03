@@ -1,6 +1,5 @@
 package com.example.electriccarapp.ui
 
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -13,10 +12,8 @@ import com.example.electriccarapp.R
 import com.example.electriccarapp.data.CarFactory
 import com.example.electriccarapp.ui.adapter.CarAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
+import org.json.JSONArray
+import org.json.JSONTokener
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -24,9 +21,7 @@ class CarFragment : Fragment() {
     private lateinit var fabCalculator: FloatingActionButton
     private lateinit var carsList: RecyclerView
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.car_fragment, container, false)
     }
@@ -46,14 +41,14 @@ class CarFragment : Fragment() {
     }
 
     private fun setupList() {
-        val data = CarFactory.list
-        val adapter = CarAdapter(data)
+        val adapter = CarAdapter(CarFactory.list)
         carsList.adapter = adapter
     }
 
     private fun setupListeners() {
         fabCalculator.setOnClickListener {
-            startActivity(Intent(context, CalculateAutonomyActivity::class.java))
+            GetCarInformations().execute("https://igorbag.github.io/cars-api/cars.json")
+//            startActivity(Intent(context, CalculateAutonomyActivity::class.java))
         }
     }
 
@@ -64,6 +59,7 @@ class CarFragment : Fragment() {
             Log.d("MyTask", "Iniciando...")
         }
 
+        @Deprecated("Deprecated in Java")
         override fun doInBackground(vararg url: String?): String {
             var urlConnection: HttpURLConnection? = null
 
@@ -72,7 +68,9 @@ class CarFragment : Fragment() {
                 urlConnection = urlBase.openConnection() as HttpURLConnection
                 urlConnection.connectTimeout = 6000
                 urlConnection.readTimeout = 6000
-                var inString = streamToString(urlConnection.inputStream)
+                val inString = urlConnection.inputStream.bufferedReader().use {
+                    it.readText()
+                }
                 publishProgress(inString)
             } catch (ex: Exception) {
                 Log.e("Error", "InputStream processing error.")
@@ -84,30 +82,25 @@ class CarFragment : Fragment() {
             return ""
         }
 
+        @Deprecated("Deprecated in Java")
         override fun onProgressUpdate(vararg values: String?) {
             try {
-                var json: JSONObject
-                values[0]?.let {
-                    json = JSONObject(it)
+                val jsonArray = JSONTokener(values[0]).nextValue() as JSONArray
+                for (i in 0 until jsonArray.length()) {
+                    val id = jsonArray.getJSONObject(i).getString("id")
+                    val price = jsonArray.getJSONObject(i).getString("preco")
+                    val battery = jsonArray.getJSONObject(i).getString("bateria")
+                    val power = jsonArray.getJSONObject(i).getString("potencia")
+                    val charge = jsonArray.getJSONObject(i).getString("recarga")
+                    Log.d("ID -> ", id)
+                    Log.d("PRICE -> ", price)
+                    Log.d("battery -> ", battery)
+                    Log.d("power -> ", power)
+                    Log.d("CHARGE -> ", charge)
                 }
             } catch (ex: Exception) {
                 Log.e("Error", "Update progress error.")
             }
-        }
-
-        fun streamToString(inputStream: InputStream): String {
-            val bufferReader = BufferedReader(InputStreamReader(inputStream))
-            var line: String
-            var result = ""
-            try {
-                do {
-                    line = bufferReader.readLine()
-                    line?.let { result += line }
-                } while (line != null)
-            } catch (ex: Exception) {
-                Log.e("Error", "StreamParcel error.")
-            }
-            return result
         }
     }
 }
