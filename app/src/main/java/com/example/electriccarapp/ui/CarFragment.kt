@@ -1,6 +1,5 @@
 package com.example.electriccarapp.ui
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
 import com.example.electriccarapp.data.CarFactory
+import com.example.electriccarapp.domain.Car
 import com.example.electriccarapp.ui.adapter.CarAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONTokener
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -45,61 +52,65 @@ class CarFragment : Fragment() {
         carsList.adapter = adapter
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun setupListeners() {
         fabCalculator.setOnClickListener {
-            GetCarInformations().execute("https://igorbag.github.io/cars-api/cars.json")
 //            startActivity(Intent(context, CalculateAutonomyActivity::class.java))
+            GlobalScope.launch(Dispatchers.IO) {
+                try {
+                    val json = getUrlData("https://igorbag.github.io/cars-api/cars.json")
+                    processJsonData(json)
+                } catch (ex: Exception) {
+                    Log.e("Error", "Error fetching data: ${ex.message}")
+                }
+            }
         }
     }
 
-    inner class GetCarInformations : AsyncTask<String, String, String>() {
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            Log.d("MyTask", "Iniciando...")
-        }
-
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg url: String?): String {
-            var urlConnection: HttpURLConnection? = null
-
-            try {
-                val urlBase = URL(url[0])
-                urlConnection = urlBase.openConnection() as HttpURLConnection
-                urlConnection.connectTimeout = 6000
-                urlConnection.readTimeout = 6000
-                val inString = urlConnection.inputStream.bufferedReader().use {
-                    it.readText()
-                }
-                publishProgress(inString)
-            } catch (ex: Exception) {
-                Log.e("Error", "InputStream processing error.")
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection?.disconnect()
-                }
+    private fun getUrlData(urlString: String): String {
+        val url = URL(urlString)
+        val connection = url.openConnection() as HttpURLConnection
+        return try {
+            val reader = BufferedReader(InputStreamReader(connection.inputStream))
+            val response = StringBuilder()
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                response.append(line)
             }
-            return ""
+            response.toString()
+        } finally {
+            connection.disconnect()
         }
+    }
 
-        @Deprecated("Deprecated in Java")
-        override fun onProgressUpdate(vararg values: String?) {
+    private suspend fun processJsonData(jsonData: String) {
+        withContext(Dispatchers.Main) {
             try {
-                val jsonArray = JSONTokener(values[0]).nextValue() as JSONArray
+                val jsonArray = JSONTokener(jsonData).nextValue() as JSONArray
                 for (i in 0 until jsonArray.length()) {
                     val id = jsonArray.getJSONObject(i).getString("id")
                     val price = jsonArray.getJSONObject(i).getString("preco")
                     val battery = jsonArray.getJSONObject(i).getString("bateria")
                     val power = jsonArray.getJSONObject(i).getString("potencia")
                     val charge = jsonArray.getJSONObject(i).getString("recarga")
+                    val photoUrl = jsonArray.getJSONObject(i).getString("urlPhoto")
                     Log.d("ID -> ", id)
                     Log.d("PRICE -> ", price)
                     Log.d("battery -> ", battery)
                     Log.d("power -> ", power)
                     Log.d("CHARGE -> ", charge)
+                    val carsModel = Car(
+                        id = id.toInt(),
+                        price = price,
+                        battery = battery,
+                        power = power,
+                        charge = charge,
+                        photoUrl = photoUrl
+                    )
+                    Log.d("Model -> ", carsModel.toString())
                 }
             } catch (ex: Exception) {
-                Log.e("Error", "Update progress error.")
+                Log.e("Error", "Error processing JSON data: ${ex.message}")
             }
         }
     }
