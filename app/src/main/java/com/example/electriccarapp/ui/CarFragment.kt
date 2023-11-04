@@ -1,5 +1,6 @@
 package com.example.electriccarapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
-import com.example.electriccarapp.data.CarFactory
 import com.example.electriccarapp.domain.Car
 import com.example.electriccarapp.ui.adapter.CarAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +27,8 @@ import java.net.URL
 class CarFragment : Fragment() {
     private lateinit var fabCalculator: FloatingActionButton
     private lateinit var carsList: RecyclerView
+    private var carsArray: ArrayList<Car> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -35,8 +37,8 @@ class CarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        callService()
         setupViews(view)
-        setupList()
         setupListeners()
     }
 
@@ -48,21 +50,24 @@ class CarFragment : Fragment() {
     }
 
     private fun setupList() {
-        val adapter = CarAdapter(CarFactory.list)
+        val adapter = CarAdapter(carsArray)
         carsList.adapter = adapter
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun setupListeners() {
         fabCalculator.setOnClickListener {
-//            startActivity(Intent(context, CalculateAutonomyActivity::class.java))
-            GlobalScope.launch(Dispatchers.IO) {
-                try {
-                    val json = getUrlData("https://igorbag.github.io/cars-api/cars.json")
-                    processJsonData(json)
-                } catch (ex: Exception) {
-                    Log.e("Error", "Error fetching data: ${ex.message}")
-                }
+            startActivity(Intent(context, CalculateAutonomyActivity::class.java))
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun callService() {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                val json = getUrlData("https://igorbag.github.io/cars-api/cars.json")
+                processJsonData(json)
+            } catch (ex: Exception) {
+                Log.e("Error", "Error fetching data: ${ex.message}")
             }
         }
     }
@@ -107,8 +112,10 @@ class CarFragment : Fragment() {
                         charge = charge,
                         photoUrl = photoUrl
                     )
+                    carsArray.add(carsModel)
                     Log.d("Model -> ", carsModel.toString())
                 }
+                setupList()
             } catch (ex: Exception) {
                 Log.e("Error", "Error processing JSON data: ${ex.message}")
             }
