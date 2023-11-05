@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONTokener
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -75,14 +76,21 @@ class CarFragment : Fragment() {
     private fun getUrlData(urlString: String): String {
         val url = URL(urlString)
         val connection = url.openConnection() as HttpURLConnection
+        connection.readTimeout = 6000
+        connection.connectTimeout = 6000
+        connection.setRequestProperty("Accept", "application/json")
         return try {
-            val reader = BufferedReader(InputStreamReader(connection.inputStream))
-            val response = StringBuilder()
-            var line: String?
-            while (reader.readLine().also { line = it } != null) {
-                response.append(line)
+            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                val reader = BufferedReader(InputStreamReader(connection.inputStream))
+                val response = StringBuilder()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    response.append(line)
+                }
+                response.toString()
+            } else {
+                throw IOException("HTTP Error: ${connection.responseCode}")
             }
-            response.toString()
         } finally {
             connection.disconnect()
         }
