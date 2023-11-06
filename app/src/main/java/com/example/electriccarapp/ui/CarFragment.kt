@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
@@ -28,6 +29,7 @@ import java.net.URL
 class CarFragment : Fragment() {
     private lateinit var fabCalculator: FloatingActionButton
     private lateinit var carsList: RecyclerView
+    private lateinit var progressWidget: ProgressBar
     private var carsArray: ArrayList<Car> = ArrayList()
 
     override fun onCreateView(
@@ -38,21 +40,25 @@ class CarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        callService()
         setupViews(view)
         setupListeners()
+        callService()
     }
 
     private fun setupViews(view: View) {
         view.apply {
             fabCalculator = findViewById(R.id.fab_calculator)
             carsList = findViewById(R.id.rv_cars_list)
+            progressWidget = findViewById(R.id.pb_loader)
         }
     }
 
     private fun setupList() {
-        val adapter = CarAdapter(carsArray)
-        carsList.adapter = adapter
+        val carAdapter = CarAdapter(carsArray)
+        carsList.apply {
+            visibility = View.VISIBLE
+            adapter = carAdapter
+        }
     }
 
     private fun setupListeners() {
@@ -63,6 +69,7 @@ class CarFragment : Fragment() {
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun callService() {
+        progressWidget.visibility = View.VISIBLE
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val json = getUrlData("https://igorbag.github.io/cars-api/cars.json")
@@ -123,6 +130,7 @@ class CarFragment : Fragment() {
                     carsArray.add(carsModel)
                     Log.d("Model -> ", carsModel.toString())
                 }
+                progressWidget.visibility = View.GONE
                 setupList()
             } catch (ex: Exception) {
                 Log.e("Error", "Error processing JSON data: ${ex.message}")
