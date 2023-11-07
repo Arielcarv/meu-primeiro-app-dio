@@ -1,6 +1,11 @@
 package com.example.electriccarapp.ui
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,6 +47,7 @@ class CarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews(view)
         setupListeners()
+        checkInternetConnectivity(requireContext())
         callService()
     }
 
@@ -114,11 +120,6 @@ class CarFragment : Fragment() {
                     val power = jsonArray.getJSONObject(i).getString("potencia")
                     val charge = jsonArray.getJSONObject(i).getString("recarga")
                     val photoUrl = jsonArray.getJSONObject(i).getString("urlPhoto")
-                    Log.d("ID -> ", id)
-                    Log.d("PRICE -> ", price)
-                    Log.d("battery -> ", battery)
-                    Log.d("power -> ", power)
-                    Log.d("CHARGE -> ", charge)
                     val carsModel = Car(
                         id = id.toInt(),
                         price = price,
@@ -135,6 +136,29 @@ class CarFragment : Fragment() {
             } catch (ex: Exception) {
                 Log.e("Error", "Error processing JSON data: ${ex.message}")
             }
+        }
+    }
+
+    fun checkInternetConnectivity(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+            return when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+
+
+        } else {
+            @Suppress("DEPRECATION")
+            val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo ?: return false
+            @Suppress("DEPRECATION")
+            return networkInfo.isConnected
         }
     }
 }
