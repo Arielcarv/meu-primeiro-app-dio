@@ -17,6 +17,8 @@
     <string name="calculate">calculate</string>
     <string name="calculator">Calculator</string>
     <string name="tv_calculate_autonomy">Calculate Car Autonomy</string>
+    <string name="no_wifi">No wifi network available!</string>
+    <string name="no_wifi_description">No wifi available image.</string>
     <string-array name="array_cities">
         <item>Campos</item>
         <item>Grussai</item>

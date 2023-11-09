@@ -42,4 +42,31 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/iv_no_wifi"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/no_wifi_description"
+        android:src="@drawable/ic_signal_wifi_off_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/grey"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_no_wifi"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_wifi"
+        android:textColor="@color/grey"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/iv_no_wifi"
+        app:layout_constraintStart_toStartOf="@id/iv_no_wifi"
+        app:layout_constraintTop_toBottomOf="@id/iv_no_wifi"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

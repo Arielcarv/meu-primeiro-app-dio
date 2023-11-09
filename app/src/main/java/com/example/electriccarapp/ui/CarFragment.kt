@@ -11,7 +11,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
@@ -35,6 +38,8 @@ class CarFragment : Fragment() {
     private lateinit var fabCalculator: FloatingActionButton
     private lateinit var carsList: RecyclerView
     private lateinit var progressWidget: ProgressBar
+    private lateinit var noInternetImage: ImageView
+    private lateinit var noInternetText: TextView
     private var carsArray: ArrayList<Car> = ArrayList()
 
     override fun onCreateView(
@@ -47,8 +52,22 @@ class CarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews(view)
         setupListeners()
-        checkInternetConnectivity(requireContext())
-        callService()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (checkInternetConnectivity(requireContext())) {
+            callService()
+        } else {
+            emptyState()
+        }
+    }
+
+    private fun emptyState() {
+        progressWidget.isVisible = false
+        carsList.isVisible = false
+        noInternetImage.isVisible = true
+        noInternetText.isVisible = true
     }
 
     private fun setupViews(view: View) {
@@ -56,6 +75,8 @@ class CarFragment : Fragment() {
             fabCalculator = findViewById(R.id.fab_calculator)
             carsList = findViewById(R.id.rv_cars_list)
             progressWidget = findViewById(R.id.pb_loader)
+            noInternetImage = findViewById(R.id.iv_no_wifi)
+            noInternetText = findViewById(R.id.tv_no_wifi)
         }
     }
 
@@ -132,6 +153,8 @@ class CarFragment : Fragment() {
                     Log.d("Model -> ", carsModel.toString())
                 }
                 progressWidget.visibility = View.GONE
+                noInternetImage.visibility = View.GONE
+                noInternetText.visibility = View.GONE
                 setupList()
             } catch (ex: Exception) {
                 Log.e("Error", "Error processing JSON data: ${ex.message}")
