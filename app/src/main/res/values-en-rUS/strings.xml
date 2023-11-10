@@ -20,4 +20,5 @@
     <string name="tv_calculate_autonomy">Calculate Car Autonomy</string>
     <string name="no_wifi">No wifi network available!</string>
     <string name="no_wifi_description">No wifi available image.</string>
+    <string name="response_error">Oops! Something\'s wrong. Try again later.</string>
 </resources>
