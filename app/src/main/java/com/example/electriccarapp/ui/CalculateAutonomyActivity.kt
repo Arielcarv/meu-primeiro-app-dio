@@ -1,5 +1,6 @@
 package com.example.electriccarapp.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -46,8 +47,17 @@ class CalculateAutonomyActivity : AppCompatActivity() {
             val kmsDriven = kmsDriven.text.toString().toFloat()
             val autonomy = chargePrice / kmsDriven
             autonomyResult.text = autonomy.toString()
+            saveSharedPreference(autonomy)
         } catch (e: NumberFormatException) {
             autonomyResult.text = "Invalid input"
+        }
+    }
+
+    fun saveSharedPreference(result: Float) {
+        val sharedPreference = getPreferences(Context.MODE_PRIVATE) ?: return
+        with(sharedPreference.edit()) {
+            putFloat(getString(R.string.saved_calculus), result)
+            apply()
         }
     }
 }
