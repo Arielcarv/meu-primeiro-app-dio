@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.electriccarapp.R
 
 class CalculateAutonomyActivity : AppCompatActivity() {
-    lateinit var chargePrice: EditText
-    lateinit var btnCalculate: Button
-    lateinit var kmsDriven: EditText
-    lateinit var autonomyResult: TextView
-    lateinit var btnClose: ImageView
+    private lateinit var chargePrice: EditText
+    private lateinit var btnCalculate: Button
+    private lateinit var kmsDriven: EditText
+    private lateinit var autonomyResult: TextView
+    private lateinit var btnClose: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +22,15 @@ class CalculateAutonomyActivity : AppCompatActivity() {
 
         setupViews()
         setupListeners()
+        setupCachedResult()
     }
 
-    fun setupViews() {
+    private fun setupCachedResult() {
+        val calculatedValue = getSharedPreference()
+        autonomyResult.text = calculatedValue.toString()
+    }
+
+    private fun setupViews() {
         chargePrice = findViewById<EditText>(R.id.et_charge_price)
         btnCalculate = findViewById<Button>(R.id.btn_calculate)
         kmsDriven = findViewById<EditText>(R.id.et_kms_driven)
@@ -32,7 +38,7 @@ class CalculateAutonomyActivity : AppCompatActivity() {
         btnClose = findViewById<ImageView>(R.id.iv_close)
     }
 
-    fun setupListeners() {
+    private fun setupListeners() {
         btnCalculate.setOnClickListener {
             calculateCarAutonomy()
         }
@@ -41,7 +47,7 @@ class CalculateAutonomyActivity : AppCompatActivity() {
         }
     }
 
-    fun calculateCarAutonomy() {
+    private fun calculateCarAutonomy() {
         try {
             val chargePrice = chargePrice.text.toString().toFloat()
             val kmsDriven = kmsDriven.text.toString().toFloat()
@@ -53,11 +59,16 @@ class CalculateAutonomyActivity : AppCompatActivity() {
         }
     }
 
-    fun saveSharedPreference(result: Float) {
+    private fun saveSharedPreference(result: Float) {
         val sharedPreference = getPreferences(Context.MODE_PRIVATE) ?: return
         with(sharedPreference.edit()) {
             putFloat(getString(R.string.saved_calculus), result)
             apply()
         }
+    }
+
+    private fun getSharedPreference(): Float {
+        val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
+        return sharedPreferences.getFloat(getString(R.string.saved_calculus), 0.0f)
     }
 }
