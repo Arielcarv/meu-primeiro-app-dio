@@ -2,7 +2,7 @@ package com.example.electriccarapp.domain
 
 import com.google.gson.annotations.SerializedName
 
-class Car(
+data class Car(
     @SerializedName("id")
     val id: Int,
     @SerializedName("preco")
@@ -14,5 +14,6 @@ class Car(
     @SerializedName("recarga")
     val charge: String,
     @SerializedName("urlPhoto")
-    val photoUrl: String
+    val photoUrl: String,
+    var isFavorite: Boolean
 )
