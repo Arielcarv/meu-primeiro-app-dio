@@ -27,12 +27,14 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_margin="16dp"
-                android:src="@drawable/ic_star_24"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
+                android:src="@drawable/ic_star_24"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:contentDescription="@string/favorite_star" />
+
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="250dp"
