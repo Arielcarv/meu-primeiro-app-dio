@@ -1,5 +1,6 @@
 package com.example.electriccarapp.ui
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -19,6 +20,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.electriccarapp.R
 import com.example.electriccarapp.data.CarsAPI
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.COLUMN_NAME_BATTERY
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.COLUMN_NAME_CHARGE
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.COLUMN_NAME_POWER
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.COLUMN_NAME_PRICE
+import com.example.electriccarapp.data.local.CarsContract.CarEntry.TABLE_NAME
+import com.example.electriccarapp.data.local.CarsDBHelper
 import com.example.electriccarapp.domain.Car
 import com.example.electriccarapp.ui.adapter.CarAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -130,13 +138,24 @@ class CarFragment : Fragment() {
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
                 else -> false
             }
-
-
         } else {
             @Suppress("DEPRECATION")
             val networkInfo: NetworkInfo = connectivityManager.activeNetworkInfo ?: return false
             @Suppress("DEPRECATION")
             return networkInfo.isConnected
         }
+    }
+
+    fun saveOnDatabase(car: Car) {
+        val dbHelper = CarsDBHelper(requireContext())
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_NAME_PRICE, car.price)
+            put(COLUMN_NAME_BATTERY, car.battery)
+            put(COLUMN_NAME_POWER, car.power)
+            put(COLUMN_NAME_CHARGE, car.charge)
+            put(COLUMN_NAME_PHOTO_URL, car.photoUrl)
+        }
+        val newregister = db?.insert(TABLE_NAME, null, values)
     }
 }
