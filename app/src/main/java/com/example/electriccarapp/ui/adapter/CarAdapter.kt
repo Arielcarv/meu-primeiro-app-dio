@@ -10,7 +10,7 @@ import com.example.electriccarapp.R
 import com.example.electriccarapp.domain.Car
 
 class CarAdapter(private val cars: List<Car>) : RecyclerView.Adapter<CarAdapter.ViewHolder>() {
-    val carItemListing: (Car) -> Unit = {}
+    var carItemListing: (Car) -> Unit = {}
 
     // Create a new view.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
