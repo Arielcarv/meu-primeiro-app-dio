@@ -2,6 +2,7 @@ package com.example.electriccarapp.data.local
 
 import android.content.ContentValues
 import android.content.Context
+import android.provider.BaseColumns
 import android.util.Log
 import com.example.electriccarapp.domain.Car
 
@@ -23,5 +24,30 @@ class CarRepository(private val context: Context) {
             ex.message?.let { Log.e("Error on data insertion", it) }
         }
         return (0L)
+    }
+
+    fun findCarById(id: Int) {
+        val dbHelper = CarsDBHelper(context)
+        val db = dbHelper.readableDatabase
+        val columns = arrayOf(
+            BaseColumns._ID,
+            CarsContract.CarEntry.COLUMN_NAME_PRICE,
+            CarsContract.CarEntry.COLUMN_NAME_BATTERY,
+            CarsContract.CarEntry.COLUMN_NAME_POWER,
+            CarsContract.CarEntry.COLUMN_NAME_CHARGE,
+            CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL,
+        )
+        val filter = "${BaseColumns._ID} = ?"
+        val filterValues = arrayOf(id.toString())
+        val cursor = db.query(
+            CarsContract.CarEntry.TABLE_NAME,
+            columns,
+            filter,
+            filterValues,
+            null,
+            null,
+            null
+        )
+        cursor.close()
     }
 }
