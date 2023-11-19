@@ -109,7 +109,8 @@ class CarFragment : Fragment() {
             adapter = carAdapter
         }
         carAdapter.carItemListing = { car ->
-            val isSaved = CarRepository(requireContext()).save(car)
+//            val isSaved = CarRepository(requireContext()).save(car)
+            val isSaved = CarRepository(requireContext()).findCarById(car.id)
         }
     }
 
@@ -119,7 +120,7 @@ class CarFragment : Fragment() {
         }
     }
 
-    fun checkInternetConnectivity(context: Context): Boolean {
+    private fun checkInternetConnectivity(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

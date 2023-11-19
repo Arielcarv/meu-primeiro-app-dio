@@ -5,6 +5,7 @@ import android.provider.BaseColumns
 object CarsContract {
     object CarEntry : BaseColumns {
         const val TABLE_NAME = "car"
+        const val COLUMN_CAR_ID = "car_id"
         const val COLUMN_NAME_PRICE = "price"
         const val COLUMN_NAME_BATTERY = "battery"
         const val COLUMN_NAME_POWER = "power"
@@ -14,6 +15,7 @@ object CarsContract {
 
     const val CAR_TABLE = "CREATE TABLE ${CarEntry.TABLE_NAME} (" +
             "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+            "${CarEntry.COLUMN_CAR_ID} TEXT," +
             "${CarEntry.COLUMN_NAME_PRICE} TEXT," +
             "${CarEntry.COLUMN_NAME_POWER} TEXT," +
             "${CarEntry.COLUMN_NAME_BATTERY} TEXT," +

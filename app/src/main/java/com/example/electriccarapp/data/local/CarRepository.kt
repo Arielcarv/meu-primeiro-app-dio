@@ -13,6 +13,8 @@ class CarRepository(private val context: Context) {
             val dbHelper = CarsDBHelper(context)
             val db = dbHelper.writableDatabase
             val values = ContentValues().apply {
+                put(CarsContract.CarEntry.COLUMN_CAR_ID, car.id)
+                put(CarsContract.CarEntry.COLUMN_NAME_PRICE, car.price)
                 put(CarsContract.CarEntry.COLUMN_NAME_PRICE, car.price)
                 put(CarsContract.CarEntry.COLUMN_NAME_BATTERY, car.battery)
                 put(CarsContract.CarEntry.COLUMN_NAME_POWER, car.power)
@@ -31,13 +33,14 @@ class CarRepository(private val context: Context) {
         val db = dbHelper.readableDatabase
         val columns = arrayOf(
             BaseColumns._ID,
+            CarsContract.CarEntry.COLUMN_CAR_ID,
             CarsContract.CarEntry.COLUMN_NAME_PRICE,
             CarsContract.CarEntry.COLUMN_NAME_BATTERY,
             CarsContract.CarEntry.COLUMN_NAME_POWER,
             CarsContract.CarEntry.COLUMN_NAME_CHARGE,
             CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL,
         )
-        val filter = "${BaseColumns._ID} = ?"
+        val filter = "${CarsContract.CarEntry.COLUMN_CAR_ID} = ?"
         val filterValues = arrayOf(id.toString())
         val cursor = db.query(
             CarsContract.CarEntry.TABLE_NAME,
@@ -48,6 +51,13 @@ class CarRepository(private val context: Context) {
             null,
             null
         )
+        val carItem = mutableListOf<Car>()
+        with(cursor){
+            while (moveToNext()) {
+                val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
+                Log.d("ID -> ", itemId.toString())
+            }
+        }
         cursor.close()
     }
 }
