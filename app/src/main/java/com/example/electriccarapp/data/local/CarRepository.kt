@@ -28,7 +28,7 @@ class CarRepository(private val context: Context) {
         return (0L)
     }
 
-    fun findCarById(id: Int) {
+    fun findCarById(id: Int): Car {
         val dbHelper = CarsDBHelper(context)
         val db = dbHelper.readableDatabase
         val columns = arrayOf(
@@ -51,13 +51,53 @@ class CarRepository(private val context: Context) {
             null,
             null
         )
-        val carItem = mutableListOf<Car>()
-        with(cursor){
+
+        var carItem = Car(
+            id = 0,
+            price = "",
+            battery = "",
+            power = "",
+            charge = "",
+            photoUrl = "",
+            isFavorite = false
+        )
+        with(cursor) {
             while (moveToNext()) {
-                val itemId = getLong(getColumnIndexOrThrow(BaseColumns._ID))
-                Log.d("ID -> ", itemId.toString())
+                val itemId = getInt(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_CAR_ID))
+                val price =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PRICE))
+                val battery =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_BATTERY))
+                val power =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_POWER))
+                val charge =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_CHARGE))
+                val photoUrl =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL))
+
+                carItem = Car(
+                    id = itemId,
+                    price = price,
+                    battery = battery,
+                    power = power,
+                    charge = charge,
+                    photoUrl = photoUrl,
+                    isFavorite = false
+                )
+                Log.d("DEBUG CURSOR", carItem.toString())
             }
         }
-        cursor.close()
+        return carItem
+    }
+
+    fun saveIfNotExist(car: Car) {
+        val carObject: Car = findCarById(car.id)
+        if (carObject.id == ID_WHEN_NO_CAR) {
+            save(car)
+        }
+    }
+
+    companion object {
+        const val ID_WHEN_NO_CAR = 0
     }
 }

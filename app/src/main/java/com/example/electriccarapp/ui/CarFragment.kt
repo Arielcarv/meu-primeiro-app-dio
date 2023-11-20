@@ -109,8 +109,7 @@ class CarFragment : Fragment() {
             adapter = carAdapter
         }
         carAdapter.carItemListing = { car ->
-//            val isSaved = CarRepository(requireContext()).save(car)
-            val isSaved = CarRepository(requireContext()).findCarById(car.id)
+            val isSaved = CarRepository(requireContext()).saveIfNotExist(car)
         }
     }
 
