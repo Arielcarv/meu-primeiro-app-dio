@@ -8,7 +8,7 @@ import com.example.electriccarapp.domain.Car
 
 class CarRepository(private val context: Context) {
 
-    fun save(car: Car): Long? {
+    private fun save(car: Car): Long? {
         try {
             val dbHelper = CarsDBHelper(context)
             val db = dbHelper.writableDatabase
@@ -28,7 +28,7 @@ class CarRepository(private val context: Context) {
         return (0L)
     }
 
-    fun findCarById(id: Int): Car {
+    private fun findCarById(id: Int): Car {
         val dbHelper = CarsDBHelper(context)
         val db = dbHelper.readableDatabase
         val columns = arrayOf(
@@ -53,7 +53,7 @@ class CarRepository(private val context: Context) {
         )
 
         var carItem = Car(
-            id = 0,
+            id = ID_WHEN_NO_CAR,
             price = "",
             battery = "",
             power = "",
@@ -95,6 +95,66 @@ class CarRepository(private val context: Context) {
         if (carObject.id == ID_WHEN_NO_CAR) {
             save(car)
         }
+    }
+
+//    fun deleteIfNotExist(car: Car) {
+//        val carObject: Car = findCarById(car.id)
+//        if (carObject.id != ID_WHEN_NO_CAR) {
+//            delete(car)
+//        }
+//    }
+
+    fun getAll(): List<Car> {
+        val dbHelper = CarsDBHelper(context)
+        val db = dbHelper.readableDatabase
+        val columns = arrayOf(
+            BaseColumns._ID,
+            CarsContract.CarEntry.COLUMN_CAR_ID,
+            CarsContract.CarEntry.COLUMN_NAME_PRICE,
+            CarsContract.CarEntry.COLUMN_NAME_BATTERY,
+            CarsContract.CarEntry.COLUMN_NAME_POWER,
+            CarsContract.CarEntry.COLUMN_NAME_CHARGE,
+            CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL,
+        )
+        val carsItemList = mutableListOf<Car>()
+        val cursor = db.query(
+            CarsContract.CarEntry.TABLE_NAME,
+            columns,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        with(cursor) {
+            while (moveToNext()) {
+                val itemId = getInt(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_CAR_ID))
+                val price =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PRICE))
+                val battery =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_BATTERY))
+                val power =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_POWER))
+                val charge =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_CHARGE))
+                val photoUrl =
+                    getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL))
+
+                carsItemList.add(
+                    Car(
+                        id = itemId,
+                        price = price,
+                        battery = battery,
+                        power = power,
+                        charge = charge,
+                        photoUrl = photoUrl,
+                        isFavorite = false
+                    )
+                )
+                Log.d("DEBUG CURSOR", carsItemList.toString())
+            }
+        }
+        return carsItemList
     }
 
     companion object {
