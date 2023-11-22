@@ -28,6 +28,19 @@ class CarRepository(private val context: Context) {
         return (0L)
     }
 
+    private fun delete(carId: Int): Int? {
+        try {
+            val dbHelper = CarsDBHelper(context)
+            val db = dbHelper.writableDatabase
+            val selection = "${CarsContract.CarEntry.COLUMN_CAR_ID} = ?"
+            val selectionArgs = arrayOf(carId.toString())
+            return db?.delete(CarsContract.CarEntry.TABLE_NAME, selection, selectionArgs)
+        } catch (ex: Exception) {
+            ex.message?.let { Log.e("Error on data insertion", it) }
+        }
+        return (0)
+    }
+
     private fun findCarById(id: Int): Car {
         val dbHelper = CarsDBHelper(context)
         val db = dbHelper.readableDatabase
@@ -97,12 +110,14 @@ class CarRepository(private val context: Context) {
         }
     }
 
-//    fun deleteIfNotExist(car: Car) {
-//        val carObject: Car = findCarById(car.id)
-//        if (carObject.id != ID_WHEN_NO_CAR) {
-//            delete(car)
-//        }
-//    }
+    fun deleteIfExist(car: Car): Boolean {
+        val carObject: Car = findCarById(car.id)
+        if (carObject.id != ID_WHEN_NO_CAR) {
+            delete(car.id)
+            return (true)
+        }
+        return (false)
+    }
 
     fun getAll(): List<Car> {
         val dbHelper = CarsDBHelper(context)

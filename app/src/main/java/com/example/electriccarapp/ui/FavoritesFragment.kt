@@ -1,7 +1,6 @@
 package com.example.electriccarapp.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,11 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews(view)
         setupList()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        refreshList()
     }
 
     private fun setupViews(view: View) {
@@ -37,6 +40,10 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setupList() {
+        refreshList()
+    }
+
+    private fun refreshList() {
         val carsArray = getCarsOnLocalDB()
         val carAdapter = CarAdapter(carsArray)
         carsFavoritesList.apply {
@@ -44,7 +51,10 @@ class FavoritesFragment : Fragment() {
             adapter = carAdapter
         }
         carAdapter.carItemListing = { car ->
-//            val isSaved = CarRepository(requireContext()).deleteIfExist(car)
+            val isDeleted = CarRepository(requireContext()).deleteIfExist(car)
+            if (isDeleted) {
+                refreshList()
+            }
         }
     }
 
