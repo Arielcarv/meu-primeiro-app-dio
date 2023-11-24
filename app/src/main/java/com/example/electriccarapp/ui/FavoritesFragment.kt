@@ -45,7 +45,7 @@ class FavoritesFragment : Fragment() {
 
     private fun refreshList() {
         val carsArray = getCarsOnLocalDB()
-        val carAdapter = CarAdapter(carsArray)
+        val carAdapter = CarAdapter(carsArray, isFavoriteScreen = true)
         carsFavoritesList.apply {
             visibility = View.VISIBLE
             adapter = carAdapter
