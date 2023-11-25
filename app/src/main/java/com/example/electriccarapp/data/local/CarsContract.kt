@@ -21,7 +21,7 @@ object CarsContract {
             "${CarEntry.COLUMN_NAME_POWER} TEXT," +
             "${CarEntry.COLUMN_NAME_BATTERY} TEXT," +
             "${CarEntry.COLUMN_NAME_CHARGE} TEXT," +
-            "${CarEntry.COLUMN_NAME_PHOTO_URL} TEXT" +
+            "${CarEntry.COLUMN_NAME_PHOTO_URL} TEXT," +
             "${CarEntry.COLUMN_NAME_IS_FAVORITE} INTEGER" +
             ")"
 
