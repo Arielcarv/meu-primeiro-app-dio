@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,8 +102,12 @@ class CarFragment : Fragment() {
     }
 
     private fun setupList(carsArray: List<Car>) {
-        val carAdapter = CarAdapter(carsArray)
-//        val carsArrayFromLocalDatabase = getCarsOnLocalDB()
+        val carsArrayFromLocalDatabase = getCarsOnLocalDB()
+        val localCarsMap = carsArrayFromLocalDatabase.associateBy { it.id }
+        val mergedCarsArray = carsArray.map { car ->
+            localCarsMap[car.id] ?: car
+        }
+        val carAdapter = CarAdapter(mergedCarsArray)
         carsList.apply {
             visibility = View.VISIBLE
             adapter = carAdapter

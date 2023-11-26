@@ -109,6 +109,7 @@ class CarRepository(private val context: Context) {
     fun saveIfNotExist(car: Car) {
         val carObject: Car = findCarById(car.id)
         if (carObject.id == ID_WHEN_NO_CAR) {
+            car.isFavorite = true
             save(car)
         }
     }
