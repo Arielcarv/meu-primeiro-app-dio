@@ -11,6 +11,7 @@ object CarsContract {
         const val COLUMN_NAME_POWER = "power"
         const val COLUMN_NAME_CHARGE = "charge"
         const val COLUMN_NAME_PHOTO_URL = "photoUrl"
+        const val COLUMN_NAME_IS_FAVORITE = "isFavorite"
     }
 
     const val CAR_TABLE = "CREATE TABLE ${CarEntry.TABLE_NAME} (" +
@@ -20,7 +21,8 @@ object CarsContract {
             "${CarEntry.COLUMN_NAME_POWER} TEXT," +
             "${CarEntry.COLUMN_NAME_BATTERY} TEXT," +
             "${CarEntry.COLUMN_NAME_CHARGE} TEXT," +
-            "${CarEntry.COLUMN_NAME_PHOTO_URL} TEXT" +
+            "${CarEntry.COLUMN_NAME_PHOTO_URL} TEXT," +
+            "${CarEntry.COLUMN_NAME_IS_FAVORITE} INTEGER" +
             ")"
 
     const val SQL_DELETE_ENTRIES =

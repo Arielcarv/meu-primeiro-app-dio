@@ -15,5 +15,5 @@ data class Car(
     val charge: String,
     @SerializedName("urlPhoto")
     val photoUrl: String,
-    var isFavorite: Boolean
+    var isFavorite: Boolean = false
 )

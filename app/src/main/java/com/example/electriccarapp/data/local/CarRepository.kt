@@ -15,11 +15,11 @@ class CarRepository(private val context: Context) {
             val values = ContentValues().apply {
                 put(CarsContract.CarEntry.COLUMN_CAR_ID, car.id)
                 put(CarsContract.CarEntry.COLUMN_NAME_PRICE, car.price)
-                put(CarsContract.CarEntry.COLUMN_NAME_PRICE, car.price)
                 put(CarsContract.CarEntry.COLUMN_NAME_BATTERY, car.battery)
                 put(CarsContract.CarEntry.COLUMN_NAME_POWER, car.power)
                 put(CarsContract.CarEntry.COLUMN_NAME_CHARGE, car.charge)
                 put(CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL, car.photoUrl)
+                put(CarsContract.CarEntry.COLUMN_NAME_IS_FAVORITE, if (car.isFavorite) 1 else 0)
             }
             return db?.insert(CarsContract.CarEntry.TABLE_NAME, null, values)
         } catch (ex: Exception) {
@@ -52,6 +52,7 @@ class CarRepository(private val context: Context) {
             CarsContract.CarEntry.COLUMN_NAME_POWER,
             CarsContract.CarEntry.COLUMN_NAME_CHARGE,
             CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL,
+            CarsContract.CarEntry.COLUMN_NAME_IS_FAVORITE,
         )
         val filter = "${CarsContract.CarEntry.COLUMN_CAR_ID} = ?"
         val filterValues = arrayOf(id.toString())
@@ -87,6 +88,8 @@ class CarRepository(private val context: Context) {
                     getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_CHARGE))
                 val photoUrl =
                     getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL))
+                val isFavorite =
+                    getInt(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_IS_FAVORITE))
 
                 carItem = Car(
                     id = itemId,
@@ -95,7 +98,7 @@ class CarRepository(private val context: Context) {
                     power = power,
                     charge = charge,
                     photoUrl = photoUrl,
-                    isFavorite = false
+                    isFavorite = isFavorite == 1,
                 )
                 Log.d("DEBUG CURSOR", carItem.toString())
             }
@@ -106,6 +109,7 @@ class CarRepository(private val context: Context) {
     fun saveIfNotExist(car: Car) {
         val carObject: Car = findCarById(car.id)
         if (carObject.id == ID_WHEN_NO_CAR) {
+            car.isFavorite = true
             save(car)
         }
     }
@@ -130,6 +134,7 @@ class CarRepository(private val context: Context) {
             CarsContract.CarEntry.COLUMN_NAME_POWER,
             CarsContract.CarEntry.COLUMN_NAME_CHARGE,
             CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL,
+            CarsContract.CarEntry.COLUMN_NAME_IS_FAVORITE,
         )
         val carsItemList = mutableListOf<Car>()
         val cursor = db.query(
@@ -154,6 +159,8 @@ class CarRepository(private val context: Context) {
                     getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_CHARGE))
                 val photoUrl =
                     getString(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_PHOTO_URL))
+                val isFavorite =
+                    getInt(getColumnIndexOrThrow(CarsContract.CarEntry.COLUMN_NAME_IS_FAVORITE))
 
                 carsItemList.add(
                     Car(
@@ -163,7 +170,7 @@ class CarRepository(private val context: Context) {
                         power = power,
                         charge = charge,
                         photoUrl = photoUrl,
-                        isFavorite = false
+                        isFavorite = isFavorite == 1
                     )
                 )
                 Log.d("DEBUG CURSOR", carsItemList.toString())
